@@ -15,8 +15,10 @@ class StudentList
     until name.empty?
       puts "What is their country of birth?"
       country_of_birth = gets.chomp
+      puts "What is their favourite hobby?"
+      hobby = gets.chomp
       # add the student hash to the array
-      students << {name: name, cohort: :november, country: country_of_birth}
+      students << {name: name, cohort: :november, country: country_of_birth, hobby: hobby}
       puts "Now we have #{students.count} students"
       # get another name from the user
       name = gets.chomp
@@ -34,7 +36,7 @@ class StudentList
   def print_students
     students.each_with_index do |student, index|
       puts "Student #{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
-      puts "They were born in #{student[:country]}"
+      puts "They were born in #{student[:country]}, and enjoy #{student[:hobby].downcase}"
     end
   end
 
