@@ -4,7 +4,34 @@ class StudentList
   attr_reader :students
 
   def initialize
+    # create empty list to contain hashes of students
     @students = []
+  end
+
+  # method to get user input for the cohort a student is in
+  def input_cohort
+    # list of valid cohorts
+    cohorts = [
+      :january,
+      :february,
+      :march,
+      :april,
+      :may,
+      :june,
+      :july,
+      :august,
+      :september,
+      :october,
+      :november,
+      :december
+    ]
+
+    loop do
+      # take input, return it if valid and loop again if not
+      puts 'Which cohort are they in? (calendar month)'
+      cohort_input = gets.chomp.downcase.to_sym
+      return cohort_input if cohorts.include?(cohort_input)
+    end
   end
 
   def input_students
@@ -19,8 +46,9 @@ class StudentList
       country_of_birth = gets.chomp
       puts "What is their favourite hobby?"
       hobby = gets.chomp
+      cohort = input_cohort
       # add the student hash to the array
-      students << {name: name, cohort: :november, country: country_of_birth, hobby: hobby}
+      students << {name: name, cohort: cohort.to_s.capitalize, country: country_of_birth, hobby: hobby}
       puts "Now we have #{students.count} students"
       # get another name from the user
       name = gets.chomp
@@ -32,7 +60,7 @@ class StudentList
   # print the list of students
   def print_header
     puts "The students of Villians Academy".center(100).red
-    puts "-----------------".center(100)
+    puts "-----------------".center(100).blue
   end
 
   def print_students
