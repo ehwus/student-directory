@@ -13,8 +13,10 @@ class StudentList
     name = gets.chomp
     # while the name is not empty, repeat this code
     until name.empty?
+      puts "What is their country of birth?"
+      country_of_birth = gets.chomp
       # add the student hash to the array
-      students << {name: name, cohort: :november}
+      students << {name: name, cohort: :november, country: country_of_birth}
       puts "Now we have #{students.count} students"
       # get another name from the user
       name = gets.chomp
@@ -32,6 +34,7 @@ class StudentList
   def print_students
     students.each_with_index do |student, index|
       puts "Student #{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
+      puts "They were born in #{student[:country]}"
     end
   end
 
