@@ -48,7 +48,7 @@ class StudentList
       hobby = gets.chomp
       cohort = input_cohort
       # add the student hash to the array
-      students << {name: name, cohort: cohort.to_s.capitalize, country: country_of_birth, hobby: hobby}
+      students << { name: name, cohort: cohort.to_s.capitalize, country: country_of_birth, hobby: hobby }
       puts "Now we have #{students.count} students"
       # get another name from the user
       name = gets.chomp
@@ -71,12 +71,16 @@ class StudentList
   end
 
   def print_footer
-    puts "Overall, we have #{students.count} great students"
+    if students.count == 1
+      puts "Overall, we have #{students.count} great student"
+    else
+      puts "Overall, we have #{students.count} great students"
+    end
   end
 end
 
 students = StudentList.new
 students.print_header
 students.input_students
-students.print_students
+students.print_students if students.students.count > 0
 students.print_footer
