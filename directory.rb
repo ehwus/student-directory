@@ -1,3 +1,5 @@
+require 'colorize'
+
 class StudentList
   attr_reader :students
 
@@ -6,8 +8,8 @@ class StudentList
   end
 
   def input_students
-    puts "Please enter the names of the students"
-    puts "To finish, just hit return twice"
+    puts "Please enter the names of the students".center(100)
+    puts "To finish, just hit return twice".center(100)
     # create empty array
     # get the first name
     name = gets.chomp
@@ -29,8 +31,8 @@ class StudentList
 
   # print the list of students
   def print_header
-    puts "The students of Villians Academy"
-    puts "-----------------"
+    puts "The students of Villians Academy".center(100).red
+    puts "-----------------".center(100)
   end
 
   def print_students
@@ -46,7 +48,7 @@ class StudentList
 end
 
 students = StudentList.new
-students.input_students
 students.print_header
+students.input_students
 students.print_students
 students.print_footer
