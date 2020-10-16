@@ -2,6 +2,21 @@ require 'colorize'
 
 class StudentList
   attr_reader :students
+  # list of valid cohorts
+  COHORTS = %i[
+    january
+    february
+    march
+    april
+    may
+    june
+    july
+    august
+    september
+    october
+    november
+    december
+  ].freeze
 
   def initialize
     # create empty list to contain hashes of students
@@ -10,27 +25,11 @@ class StudentList
 
   # method to get user input for the cohort a student is in
   def input_cohort
-    # list of valid cohorts
-    cohorts = [
-      :january,
-      :february,
-      :march,
-      :april,
-      :may,
-      :june,
-      :july,
-      :august,
-      :september,
-      :october,
-      :november,
-      :december
-    ]
-
     loop do
       # take input, return it if valid and loop again if not
       puts 'Which cohort are they in? (calendar month)'
       cohort_input = gets.chomp.downcase.to_sym
-      return cohort_input if cohorts.include?(cohort_input)
+      return cohort_input if COHORTS.include?(cohort_input)
     end
   end
 
