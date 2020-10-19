@@ -66,9 +66,14 @@ class StudentList
     # find out active cohorts
     active_cohorts = students.map { |student| student[:cohort] }.uniq
 
-    students.each_with_index do |student, index|
-      puts "Student #{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
-      puts "They were born in #{student[:country]}, and enjoy #{student[:hobby].downcase}"
+    active_cohorts.each do |cohort|
+      students.each_with_index do |student, index|
+        next unless student[:cohort] == cohort
+
+        puts "Student #{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
+        puts "They were born in #{student[:country]}, and enjoy #{student[:hobby].downcase}"
+        puts
+      end
     end
   end
 
