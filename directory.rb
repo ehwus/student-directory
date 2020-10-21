@@ -23,6 +23,27 @@ class StudentList
     @students = []
   end
 
+  def interactive_menu
+    loop do
+      puts '1 - Input the students'
+      puts '2 - Show the students'
+      puts '9 - Exit'
+      selection = gets.chomp
+      case selection
+      when '1'
+        input_students
+      when '2'
+        print_header
+        print_students if @students.count.positive?
+        print_footer
+        puts
+      when '9'
+        exit
+      else
+        puts "I don't know what you meant, try again"
+      end
+    end
+  end
   # method to get user input for the cohort a student is in
   def input_cohort
     loop do
@@ -87,7 +108,4 @@ class StudentList
 end
 
 students = StudentList.new
-students.print_header
-students.input_students
-students.print_students if students.students.count > 0
-students.print_footer
+students.interactive_menu
