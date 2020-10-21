@@ -29,23 +29,26 @@ class StudentList
     puts '9 - Exit'
   end
 
+  def process(selection)
+    case selection
+    when '1'
+      input_students
+    when '2'
+      print_header
+      print_students if @students.count.positive?
+      print_footer
+      puts
+    when '9'
+      exit
+    else
+      puts "I don't know what you meant, try again"
+    end
+  end
+
   def interactive_menu
     loop do
       print_menu
-      selection = gets.chomp
-      case selection
-      when '1'
-        input_students
-      when '2'
-        print_header
-        print_students if @students.count.positive?
-        print_footer
-        puts
-      when '9'
-        exit
-      else
-        puts "I don't know what you meant, try again"
-      end
+      process(gets.chomp)
     end
   end
   # method to get user input for the cohort a student is in
