@@ -27,6 +27,7 @@ class StudentList
     puts '1 - Input the students'
     puts '2 - Show the students'
     puts '3 - Save the list to students.csv'
+    puts '4 - Load the list from students.csv'
     puts '9 - Exit'
   end
 
@@ -42,6 +43,15 @@ class StudentList
     file.close
   end
 
+  def load_students
+    file = File.open('students.csv', 'r')
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      @students << { name: name, cohort: cohort.downcase.to_sym }
+    end
+    file.close
+  end
+
   def process(selection)
     case selection
     when '1'
@@ -53,6 +63,8 @@ class StudentList
       puts
     when '3'
       save_students
+    when '4'
+      load_students
     when '9'
       exit
     else
@@ -84,13 +96,9 @@ class StudentList
     name = gets.chomp
     # while the name is not empty, repeat this code
     until name.empty?
-      puts "What is their country of birth?"
-      country_of_birth = gets.chomp
-      puts "What is their favourite hobby?"
-      hobby = gets.chomp
       cohort = input_cohort
       # add the student hash to the array
-      students << { name: name, cohort: cohort.to_s.capitalize, country: country_of_birth, hobby: hobby }
+      students << { name: name, cohort: cohort.to_sym }
       puts "Now we have #{students.count} students"
       # get another name from the user
       name = gets.chomp
@@ -113,8 +121,7 @@ class StudentList
       students.each_with_index do |student, index|
         next unless student[:cohort] == cohort
 
-        puts "Student #{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
-        puts "They were born in #{student[:country]}, and enjoy #{student[:hobby].downcase}"
+        puts "Student #{index + 1}: #{student[:name]} (#{student[:cohort].capitalize} cohort)"
         puts
       end
     end
