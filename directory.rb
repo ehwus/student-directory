@@ -43,13 +43,26 @@ class StudentList
     file.close
   end
 
-  def load_students
-    file = File.open('students.csv', 'r')
+  def load_students(filename = 'students.csv')
+    file = File.open(filename, 'r')
     file.readlines.each do |line|
       name, cohort = line.chomp.split(',')
       @students << { name: name, cohort: cohort.downcase.to_sym }
     end
     file.close
+  end
+
+  def try_load_students
+    filename = ARGV.first
+    return if filename.nil?
+
+    if File.exist?(filename)
+      load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+    else
+      puts "Sorry, #{filename} does not exist"
+      exit
+    end
   end
 
   def process(selection)
@@ -75,7 +88,7 @@ class StudentList
   def interactive_menu
     loop do
       print_menu
-      process(gets.chomp)
+      process(STDIN.gets.chomp)
     end
   end
   # method to get user input for the cohort a student is in
@@ -83,7 +96,7 @@ class StudentList
     loop do
       # take input, return it if valid and loop again if not
       puts 'Which cohort are they in? (calendar month)'
-      cohort_input = gets.chomp.downcase.to_sym
+      cohort_input = STDIN.gets.chomp.downcase.to_sym
       return cohort_input if COHORTS.include?(cohort_input)
     end
   end
@@ -93,7 +106,7 @@ class StudentList
     puts "To finish, just hit return twice".center(100)
     # create empty array
     # get the first name
-    name = gets.chomp
+    name = STDIN.gets.chomp
     # while the name is not empty, repeat this code
     until name.empty?
       cohort = input_cohort
@@ -101,7 +114,7 @@ class StudentList
       students << { name: name, cohort: cohort.to_sym }
       puts "Now we have #{students.count} students"
       # get another name from the user
-      name = gets.chomp
+      name = STDIN.gets.chomp
     end
     # return array of students
     students
@@ -137,4 +150,5 @@ class StudentList
 end
 
 students = StudentList.new
+students.try_load_students
 students.interactive_menu
