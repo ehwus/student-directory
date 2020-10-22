@@ -54,7 +54,11 @@ class StudentList
 
   def try_load_students
     filename = ARGV.first
-    return if filename.nil?
+    if filename.nil?
+      load_students
+      puts "Loaded #{@students.count} students from 'students.csv'"
+      return
+    end
 
     if File.exist?(filename)
       load_students(filename)
